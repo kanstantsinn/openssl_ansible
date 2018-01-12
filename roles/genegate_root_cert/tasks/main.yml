@@ -1,0 +1,23 @@
+- name: renegate root key
+  openssl_privatekey:
+    path: "{{ root_key_path }}"
+    passphrase: "{{ kpass }}"
+    cipher: aes256
+
+- name: renerate root csr
+  openssl_csr:
+    path: "{{ root_csr_path }}"
+    privatekey_path: "{{ root_key_path }}"
+    country_name: BY
+    organization_name: epam
+    common_name: "{{ common_name }}"
+    state_or_province_name: belarus
+    privatekey_passphrase: "{{ kpass }}"
+
+- name: create root cert
+  openssl_certificate:
+    path: "{{ root_cert_path }}"
+    privatekey_path: "{{ root_key_path }}"
+    csr_path:  "{{ root_csr_path }}"
+    provider: selfsigned
+    privatekey_passphrase: "{{ kpass }}"

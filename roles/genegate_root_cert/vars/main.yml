@@ -1,0 +1,5 @@
+kpass: 
+root_key_path: /root/ansible/artifacts/ca.key.pem
+root_csr_path: /root/ansible/artifacts/ca.csr
+root_cert_path: /root/ansible/artifacts/ca.cert.pem
+common_name: example.com

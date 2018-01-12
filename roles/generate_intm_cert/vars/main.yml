@@ -1,0 +1,6 @@
+kpass: 
+intm_key_path: /root/ansible/artifacts/kostya.com.pem
+intm_csr_path: /root/ansible/artifacts/example.com.csr
+intm_cert_path: /root/ansible/artifacts/example.com.cert.pem
+root_key_path: /root/ansible/artifacts/ca.key.pem
+common_name: example.com

@@ -1,0 +1,24 @@
+- name: genegate intm key
+  openssl_privatekey:
+    path: "{{ intm_key_path }}"
+    passphrase: "{{ kpass }}"
+    cipher: aes256
+
+- name: generate intm csr
+  openssl_csr:
+    path: "{{ intm_csr_path }}"
+    privatekey_path: "{{ intm_key_path }}"
+    country_name: BY
+    organization_name: epam
+    common_name: "{{ common_name }}"
+    state_or_province_name: belarus
+    privatekey_passphrase: "{{ kpass }}"
+
+- name: create intm cert
+  openssl_certificate:
+    path: "{{ intm_cert_path }}"
+    privatekey_path: "{{ root_key_path }}"
+    csr_path:  "{{ intm_csr_path }}"
+    provider: selfsigned
+    privatekey_passphrase: "{{ kpass }}"
+
