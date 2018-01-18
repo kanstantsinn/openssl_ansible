@@ -2,15 +2,15 @@
 
 - name: genegate domain key
   openssl_privatekey:
-    path: "./artifacts/{{ item }}.pem"
+    path: "./{{ artifacts_f }}/{{ item }}.key"
     passphrase: "{{ kpass }}"
     cipher: aes256
   with_items: "{{ domain_names }}"
 
 - name: generate domain csr
   openssl_csr:
-    path: "./artifacts/{{ item }}.csr"
-    privatekey_path: "./artifacts/{{ item }}.pem"
+    path: "./{{ artifacts_f }}/{{ item }}.csr"
+    privatekey_path: "./{{ artifacts_f }}/{{ item }}.key"
     country_name: BY
     organization_name: epam
     common_name: "{{ item }}"
@@ -20,9 +20,9 @@
 
 - name: create domain cert
   openssl_certificate:
-    path: "./artifacts/{{ item }}.cert.pem"
+    path: "./{{ artifacts_f }}/{{ item }}.cert.pem"
     privatekey_path: "{{ intm_key_path }}"
-    csr_path:  "./artifacts/{{ item }}.csr"
+    csr_path:  "./{{ artifacts_f }}/{{ item }}.csr"
     provider: selfsigned
     privatekey_passphrase: "{{ kpass }}"
   with_items: "{{ domain_names }}"

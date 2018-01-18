@@ -1,8 +1,14 @@
+- name: create folder for arifacts
+  file: 
+    path: "{{ artifacts_f }}"
+    state: directory
+
 - name: renegate root key
   openssl_privatekey:
     path: "{{ root_key_path }}"
     passphrase: "{{ kpass }}"
     cipher: aes256
+    state: present
 
 - name: renerate root csr
   openssl_csr:

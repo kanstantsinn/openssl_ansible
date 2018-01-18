@@ -14,11 +14,17 @@
     state_or_province_name: belarus
     privatekey_passphrase: "{{ kpass }}"
 
+- stat:
+    path: "{{ intm_cert_path }}"
+  register: sym
+
 - name: create intm cert
   openssl_certificate:
     path: "{{ intm_cert_path }}"
     privatekey_path: "{{ root_key_path }}"
+ #   privatekey_path: "{{ intm_key_path }}"
     csr_path:  "{{ intm_csr_path }}"
     provider: selfsigned
     privatekey_passphrase: "{{ kpass }}"
-
+#    selfsigned_not_after: "2012312359Z"
+#    selfsigned_not_before: "1011112359Z"

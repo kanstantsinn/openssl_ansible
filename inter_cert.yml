@@ -2,19 +2,19 @@
   connection: local
   hosts: localhost
   vars:
-#    root_kpass: "{{ lookup ('file', './pass.txt') }}"
     domain: "example.com"
     domain_certs: 
     - example.com
     - customer.example.com
     - "*.datastore.example.com"
-#  vars_prompt:
-#  - name: "root_kpass"
-#    prompt: "input password for private key"
+    art_folder: "artifacts123"
+  vars_prompt:
+  - name: "root_kpass"
+    prompt: "input password for private key"
   roles:
-  - {role: genegate_root_cert, kpass: "{{ root_kpass }}", common_name: "{{ domain }}", root_key_path: "./artifacts/ca.key.pem", root_csr_path: "./artifacts/ca.csr", root_cert_path: "./artifacts/ca.cert.pem"}
-  - {role: generate_intm_cert,  kpass: "{{ root_kpass }}", common_name: "{{ domain }}",  intm_key_path: "./artifacts/kostya.com.pem", intm_csr_path: "./artifacts/int.ca.csr", intm_cert_path: "./artifacts/int.ca.cert.pem", root_key_path: "./artifacts/ca.key.pem"}  
+  - {role: genegate_root_cert, artifacts_f: "{{ art_folder }}", kpass: "{{ root_kpass }}", common_name: "{{ domain }}", root_key_path: "./{{ art_folder }}/ca.key", root_csr_path: "./{{ art_folder }}/ca.csr", root_cert_path: "./{{ art_folder }}/ca.cert.pem"}
+  - {role: generate_intm_cert,  kpass: "{{ root_kpass }}", common_name: "{{ domain }}",  intm_key_path: "./{{ art_folder }}/kostya.com.key", intm_csr_path: "./{{ art_folder }}/int.ca.csr", intm_cert_path: "./{{ art_folder }}/int.ca.cert.pem", root_key_path: "./{{ art_folder }}/ca.key"}  
 
-  - {role: sign_domain_cert,  kpass: "{{ root_kpass }}",  domain_names: "{{ domain_certs }}",  intm_key_path: "./artifacts/kostya.com.pem" }
+  - {role: sign_domain_cert,  artifacts_f: "{{ art_folder }}", kpass: "{{ root_kpass }}",  domain_names: "{{ domain_certs }}",  intm_key_path: "./{{ art_folder }}/kostya.com.key" }
 
 
