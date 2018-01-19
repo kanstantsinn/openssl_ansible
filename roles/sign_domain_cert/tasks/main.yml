@@ -1,11 +1,14 @@
-- debug: msg={{domain_names}}
-
 - name: genegate domain key
   openssl_privatekey:
-    path: "./{{ artifacts_f }}/{{ item }}.key"
+    path: "./{{ artifacts_f }}/{{ item }}.pass.key"
     passphrase: "{{ kpass }}"
     cipher: aes256
   with_items: "{{ domain_names }}"
+
+- name: unencrypt server private key
+  shell: test -e "./{{ artifacts_f }}/{{ item }}.key"  ||  openssl rsa -passin "pass:{{ kpass }}" -in "./{{ artifacts_f }}/{{ item }}.pass.key" -out "./{{ artifacts_f }}/{{ item }}.key"
+  with_items: "{{ domain_names }}"
+  ignore_errors: yes
 
 - name: generate domain csr
   openssl_csr:
@@ -14,15 +17,20 @@
     country_name: BY
     organization_name: epam
     common_name: "{{ item }}"
+    email_address: "kanstantsin_shchura@epam.com"
     state_or_province_name: belarus
     privatekey_passphrase: "{{ kpass }}"
   with_items: "{{ domain_names }}"
 
 - name: create domain cert
   openssl_certificate:
-    path: "./{{ artifacts_f }}/{{ item }}.cert.pem"
+    path: "./{{ artifacts_f }}/{{ item }}.crt"
     privatekey_path: "{{ intm_key_path }}"
     csr_path:  "./{{ artifacts_f }}/{{ item }}.csr"
     provider: selfsigned
     privatekey_passphrase: "{{ kpass }}"
+    issuer:
+      C: BE
+      0: epam
+      CN: local CA
   with_items: "{{ domain_names }}"

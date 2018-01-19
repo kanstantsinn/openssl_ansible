@@ -15,6 +15,7 @@
     path: "{{ root_csr_path }}"
     privatekey_path: "{{ root_key_path }}"
     country_name: BY
+    email_address: "kanstantsin_shchura@epam.com"
     organization_name: epam
     common_name: "{{ common_name }}"
     state_or_province_name: belarus
@@ -26,4 +27,8 @@
     privatekey_path: "{{ root_key_path }}"
     csr_path:  "{{ root_csr_path }}"
     provider: selfsigned
+    issuer:
+      C: BE
+      0: epam
+      CN: local CA
     privatekey_passphrase: "{{ kpass }}"
