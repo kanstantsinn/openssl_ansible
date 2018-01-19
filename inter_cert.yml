@@ -8,7 +8,7 @@
     - www.example.com
     - www.customer.example.com
     - "*.datastore.example.com"
-    art_folder: "artifacts123"
+    art_folder: "artifacts"
   vars_prompt:
   - name: "root_kpass"
     prompt: "input password for private key"
