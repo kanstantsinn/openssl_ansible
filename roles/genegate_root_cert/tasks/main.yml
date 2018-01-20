@@ -20,6 +20,14 @@
     common_name: "{{ common_name }}"
     state_or_province_name: belarus
     privatekey_passphrase: "{{ kpass }}"
+    locality_name: "epam"
+    organization_name: "epam"
+    organizational_unit_name: "minsk"
+    state_or_province_name: "minsk"
+    subject_alt_name: 'DNS:www.example.com'
+    key_usage: 'digitalSignature'
+#    extended_key_usage:
+#      - clientAuth
 
 - name: create root cert
   openssl_certificate:
@@ -31,4 +39,9 @@
       C: BE
       0: epam
       CN: local CA
+    subject:
+      C: BE
+      0: epam
+      CN: local CA
+    subject_alt_name: 'DNS:www.example.com'
     privatekey_passphrase: "{{ kpass }}"

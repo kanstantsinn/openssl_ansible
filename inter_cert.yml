@@ -13,7 +13,23 @@
   - name: "root_kpass"
     prompt: "input password for private key"
   roles:
-  - {role: genegate_root_cert, artifacts_f: "{{ art_folder }}", kpass: "{{ root_kpass }}", common_name: "{{ com_name }}", root_key_path: "./{{ art_folder }}/ca.key", root_csr_path: "./{{ art_folder }}/ca.csr", root_cert_path: "./{{ art_folder }}/ca.crt"}
-  - {role: generate_intm_cert,  kpass: "{{ root_kpass }}", common_name: "{{ com_name }}",  intm_key_path: "./{{ art_folder }}/int.key", intm_csr_path: "./{{ art_folder }}/int.csr", intm_cert_path: "./{{ art_folder }}/int.crt", root_key_path: "./{{ art_folder }}/ca.key"}  
+  - role: genegate_root_cert
+    artifacts_f: "{{ art_folder }}"
+    kpass: "{{ root_kpass }}"
+    common_name: "{{ com_name }}"
+    root_key_path: "./{{ art_folder }}/ca.key"
+    root_csr_path: "./{{ art_folder }}/ca.csr"
+    root_cert_path: "./{{ art_folder }}/ca.crt"
+  - role: generate_intm_cert
+    kpass: "{{ root_kpass }}"
+    common_name: "{{ com_name }}"
+    intm_key_path: "./{{ art_folder }}/int.key"
+    intm_csr_path: "./{{ art_folder }}/int.csr"
+    intm_cert_path: "./{{ art_folder }}/int.crt"
+    root_key_path: "./{{ art_folder }}/ca.key"
 
-  - {role: sign_domain_cert,  artifacts_f: "{{ art_folder }}", kpass: "{{ root_kpass }}",  domain_names: "{{ domain_certs }}",  intm_key_path: "./{{ art_folder }}/int.key" }
+  - role: sign_domain_cert
+    artifacts_f: "{{ art_folder }}"
+    kpass: "{{ root_kpass }}"
+    domain_names: "{{ domain_certs }}"
+    intm_key_path: "./{{ art_folder }}/int.key"
