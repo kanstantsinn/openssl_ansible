@@ -4,6 +4,15 @@
   vars:
     domain: "www.example.com"
     com_name: "local CA"
+    countryName: "BY"
+    stateOrProvinceName: "VA"
+    localityName: "minsk"
+    organizationName: "epam"
+    commonName: "www.example.com"
+    alt_name: "www.example.com"
+    nginx_conf_folder: "nginx_conf"
+    docker_container_name: "nginx-https"
+    
     domain_certs: 
     - www.example.com
     - www.customer.example.com
@@ -12,6 +21,7 @@
   vars_prompt:
   - name: "root_kpass"
     prompt: "input password for private key"
+
   roles:
   - role: genegate_root_cert
     artifacts_f: "{{ art_folder }}"
@@ -20,16 +30,22 @@
     root_key_path: "./{{ art_folder }}/ca.key"
     root_csr_path: "./{{ art_folder }}/ca.csr"
     root_cert_path: "./{{ art_folder }}/ca.crt"
-  - role: generate_intm_cert
-    kpass: "{{ root_kpass }}"
-    common_name: "{{ com_name }}"
-    intm_key_path: "./{{ art_folder }}/int.key"
-    intm_csr_path: "./{{ art_folder }}/int.csr"
-    intm_cert_path: "./{{ art_folder }}/int.crt"
-    root_key_path: "./{{ art_folder }}/ca.key"
+    C: "{{ countryName }}"
+    ST: "{{ stateOrProvinceName }}"
+    L: "{{ localityName }}"
+    O: "{{ organizationName }}"
+    CN: "{{ commonName }}"
+    alt: "{{ alt_name }}"
 
   - role: sign_domain_cert
     artifacts_f: "{{ art_folder }}"
     kpass: "{{ root_kpass }}"
     domain_names: "{{ domain_certs }}"
-    intm_key_path: "./{{ art_folder }}/int.key"
+    root_key_path: "./{{ art_folder }}/ca.key"
+    root_cert_path: "./{{ art_folder }}/ca.crt"
+
+  - role: nginx_docker
+    domain_names: "{{ domain_certs }}"
+    nginx_folder: "{{ nginx_conf_folder }}"
+    docker_name: "{{ docker_container_name }}"
+    alt: "{{ alt_name }}"

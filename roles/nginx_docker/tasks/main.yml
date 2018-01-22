@@ -1,0 +1,39 @@
+- name: create forder nginx_conf/
+  file:
+    path:  "{{ nginx_folder }}"
+    state: directory
+
+- name: copy certs to docker folder
+  copy:
+    src: "{{ art_folder }}/{{ item }}.crt"
+    dest:  "{{ nginx_folder }}/{{ item }}.crt"
+  with_items: "{{ domain_names }}"
+
+- name: copy keys to docker folder
+  copy:
+    src: "{{ art_folder }}/{{ item }}.key"
+    dest:  "{{ nginx_folder }}/{{ item }}.key"
+  with_items: "{{ domain_names }}"
+
+- name: copy nginx.conf
+  template:
+    src: "https.conf"
+    dest: "{{ nginx_folder }}/{{ item }}.conf"
+  with_items: "{{ domain_names }}"
+  
+ #   - {dest: "123.conf" }
+ #   - {dest: "456.conf" }
+
+- name: run docker nginx
+  docker:
+    name: "{{ docker_name }}"
+    image: nginx
+    state: started
+    volumes:
+    - /root/ansible/{{ nginx_folder }}:/etc/nginx/conf.d
+    tty: True
+    expose: "443"
+    ports: 
+    - "443:443"
+    detach: True
+    
