@@ -21,5 +21,5 @@ Options(can be edited in int_cert.yml):
 - docker_container_name: Name of the docker container 
 - domain_certs: domain names for server certificates
 
-Example command to start executing module:
+Start executing module:
 #ansible-playbook inter_cert.yml
