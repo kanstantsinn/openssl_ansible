@@ -52,7 +52,7 @@
       <skippedTags></skippedTags>
       <startAtTask></startAtTask>
       <credentialsId></credentialsId>
-      <sudo>false</sudo>
+      <sudo>true</sudo>
       <sudoUser></sudoUser>
       <forks>5</forks>
       <unbufferedOutput>true</unbufferedOutput>
@@ -64,7 +64,7 @@
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>artifacts/*cert.pem</artifacts>
+      <artifacts>artifacts/*.crt, artifacts/*.pass.key, artifacts/ca.key</artifacts>
       <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
