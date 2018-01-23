@@ -2,8 +2,8 @@
   connection: local
   hosts: localhost
   vars:
-    domain: "www.example.com"
-    com_name: "local CA"
+#    domain: "www.example.com"
+#    com_name: "local CA"
     countryName: "BY"
     stateOrProvinceName: "VA"
     localityName: "minsk"
@@ -26,7 +26,7 @@
   - role: genegate_root_cert
     artifacts_f: "{{ art_folder }}"
     kpass: "{{ root_kpass }}"
-    common_name: "{{ com_name }}"
+    common_name: "{{ commonName }}"
     root_key_path: "./{{ art_folder }}/ca.key"
     root_csr_path: "./{{ art_folder }}/ca.csr"
     root_cert_path: "./{{ art_folder }}/ca.crt"
