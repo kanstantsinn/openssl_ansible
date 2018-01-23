@@ -3,7 +3,12 @@ Ansible-SSL-nginx-docker
 Generate Intermidiate certificate and sign server certs by Intermidiate. 
 Start nginx https server with generated server certificates.
 
-Certificate to import on client's mashines: ca.crt
+Thia ansible playbook contins three roles:
+- First generate intermidiate private key (ca.key).
+- Second sign server certificates that were mention in vars in int_cert.yml
+- Up docker container with nginx HTTPS server.
+
+!!!Certificate to import on client's mashines: ca.crt!!!
 
 Prerequisetes:
 - docker-py

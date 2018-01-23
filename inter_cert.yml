@@ -23,12 +23,11 @@
     prompt: "input password for private key"
 
   roles:
-  - role: genegate_root_cert
+  - role: generate_root_cert
     artifacts_f: "{{ art_folder }}"
     kpass: "{{ root_kpass }}"
     common_name: "{{ commonName }}"
     root_key_path: "./{{ art_folder }}/ca.key"
-    root_csr_path: "./{{ art_folder }}/ca.csr"
     root_cert_path: "./{{ art_folder }}/ca.crt"
     C: "{{ countryName }}"
     ST: "{{ stateOrProvinceName }}"

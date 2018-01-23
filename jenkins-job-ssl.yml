@@ -1,0 +1,28 @@
+- name: Create jenkins job
+  connection: local
+  hosts: localhost
+  vars:
+    config_files: # SET only names, wihout ".XML"
+    - ansible-ssl
+
+    url_jenkins: "http://127.0.0.1:8080"  
+
+#  vars_prompt:
+#  - name: "user_jenkins"
+#    prompt: "input user for jenkins"
+#  - name: "paswd_jenkns"
+#    prompt: "input password"
+
+  tasks:
+  - name: create jenkins job
+    jenkins_job:
+      name: "{{ item }}"
+      state: present
+#      user: "{{ user_jenkins }}"
+#      password: "{{ paswd_jenkns }}"
+      user: "admin"
+      password: "xxXX1234"
+      config: "{{ lookup('file', 'jenkins/ansible-ssl.xml') }}"
+      url: "{{ url_jenkins }}"
+    with_items: "{{ config_files }}"
+      
