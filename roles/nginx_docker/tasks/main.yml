@@ -28,7 +28,7 @@
     image: nginx
     state: started
     volumes:
-    - /root/ansible/{{ nginx_folder }}:/etc/nginx/conf.d
+    - ./{{ nginx_folder }}:/etc/nginx/conf.d
     tty: True
     expose: "443"
     ports: 
