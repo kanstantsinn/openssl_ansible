@@ -21,8 +21,6 @@
     dest: "{{ nginx_folder }}/{{ item }}.conf"
   with_items: "{{ domain_names }}"
   
- #   - {dest: "123.conf" }
- #   - {dest: "456.conf" }
 
 - name: run docker nginx
   docker:

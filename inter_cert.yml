@@ -2,8 +2,6 @@
   connection: local
   hosts: localhost
   vars:
-#    domain: "www.example.com"
-#    com_name: "local CA"
     countryName: "BY"
     stateOrProvinceName: "VA"
     localityName: "minsk"
